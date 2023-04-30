@@ -22,12 +22,10 @@ function App() {
 
   const ref = useRef(null);
 
-  const toggle = () => {
+  const stopFirework = () => {
     if (!ref.current) return;
     if (ref.current.isRunning) {
       ref.current.stop();
-    } else {
-      ref.current.start();
     }
   };
 
@@ -41,7 +39,7 @@ function App() {
     setChoiceTwo(null);
     setCards(shuffleCards);
     setTurns(0);
-    toggle();
+    stopFirework();
   };
 
   // handle a choice

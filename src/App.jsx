@@ -71,17 +71,19 @@ function App() {
 
   return (
     <>
-      <div className="w-full h-full  text-center">
-        <h1 className="text-[#fff] text-[2rem] font-bold mt-[2rem] md:mt-[2rem]">
-          Twins
-        </h1>
-        <button
-          onClick={shuffleCards}
-          className="text-[#fff] rounded-[5px] text-[1.3rem] bg-none border border-[1px] px-[20px] py-[10px] mt-[1rem] lg:hover:bg-[#c23866] duration-150"
-        >
-          New Game
-        </button>
-        <div className="w-[300px] md:w-[860px] mx-auto grid grid-cols-3 md:grid-cols-4 gap-[20px] mt-[40px]">
+      <div className="w-full h-full text-center">
+        <div className="flex justify-between items-center md:flex-col px-[20px]">
+          <h1 className="text-[#fff] mt-[10px] md:text-[2rem] font-bold md:mt-[2rem]">
+            Twins
+          </h1>
+          <button
+            onClick={shuffleCards}
+            className="text-[#fff] rounded-[5px] md:text-[1.3rem] bg-none border border-[1px] px-[20px] py-[10px] mt-[1rem] lg:hover:bg-[#c23866] duration-150"
+          >
+            New Game
+          </button>
+        </div>
+        <div className="w-[300px] md:w-[860px] mx-auto grid grid-cols-3 md:grid-cols-4 gap-[20px] mt-[20px] md:mt-[40px]">
           {cards.map((card) => (
             <SingleCard
               key={card.id}

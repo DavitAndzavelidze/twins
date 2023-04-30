@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { Fireworks } from "@fireworks-js/react";
 import SingleCard from "./components/singleCard";
 import "./App.css";
 
@@ -17,6 +18,18 @@ function App() {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
+  const [allMatched, setAllMatched] = useState(false);
+
+  const ref = useRef(null);
+
+  const toggle = () => {
+    if (!ref.current) return;
+    if (ref.current.isRunning) {
+      ref.current.stop();
+    } else {
+      ref.current.start();
+    }
+  };
 
   // shuffle cards
   const shuffleCards = () => {
@@ -28,6 +41,7 @@ function App() {
     setChoiceTwo(null);
     setCards(shuffleCards);
     setTurns(0);
+    toggle();
   };
 
   // handle a choice
@@ -41,13 +55,16 @@ function App() {
       setDisabled(true);
       if (choiceOne.src === choiceTwo.src) {
         setCards((prevCards) => {
-          return prevCards.map((card) => {
+          const newCards = prevCards.map((card) => {
             if (card.src === choiceOne.src) {
               return { ...card, matched: true };
             } else {
               return card;
             }
           });
+          const allMatched = newCards.every((card) => card.matched);
+          setAllMatched(allMatched);
+          return newCards;
         });
         resetTurn();
       } else {
@@ -78,7 +95,7 @@ function App() {
           </h1>
           <button
             onClick={shuffleCards}
-            className="text-[#fff] rounded-[5px] md:text-[1.3rem] bg-none border border-[1px] px-[20px] py-[10px] mt-[1rem] lg:hover:bg-[#c23866] duration-150"
+            className="text-[#fff] rounded-[5px] md:text-[1.3rem] bg-none border border-[1px] px-[20px] py-[10px] mt-[1rem] lg:hover:bg-[#c23866] duration-150 relative z-[99]"
           >
             New Game
           </button>
@@ -95,6 +112,22 @@ function App() {
           ))}
         </div>
         <p className="text-[#fff] mt-[1rem]">Turns: {turns}</p>
+        {allMatched && (
+          <div className="absolute top-0 left-0 w-full h-full bg-transparent z-[-1]">
+            <Fireworks
+              ref={ref}
+              options={{ opacity: 0.5 }}
+              style={{
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                position: "fixed",
+                zIndex: -1,
+              }}
+            />
+          </div>
+        )}
       </div>
     </>
   );

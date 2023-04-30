@@ -72,7 +72,7 @@ function App() {
   return (
     <>
       <div className="w-full h-full  text-center">
-        <h1 className="text-[#fff] text-[2rem] font-bold mt-[4rem] md:mt-[1rem]">
+        <h1 className="text-[#fff] text-[2rem] font-bold mt-[2rem] md:mt-[2rem]">
           Twins
         </h1>
         <button
@@ -81,7 +81,7 @@ function App() {
         >
           New Game
         </button>
-        <div className="w-[300px] md:w-[860px] mx-auto grid grid-cols-4 gap-[20px] mt-[40px]">
+        <div className="w-[300px] md:w-[860px] mx-auto grid grid-cols-3 md:grid-cols-4 gap-[20px] mt-[40px]">
           {cards.map((card) => (
             <SingleCard
               key={card.id}
